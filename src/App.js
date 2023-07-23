@@ -1,25 +1,42 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import FlashScreen from './components/FlashScreen';
+import SignIn from './pages/signin/SignIn';
+import Home from './pages/home/Home';
+import Header from './components/header/Header';
 
 function App() {
+
+  const [isFlashScreen, setIsFlashScreen] = useState(true);
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setIsFlashScreen(false);
+    }, 1500);
+
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div id="App">
+        
+        {
+          isFlashScreen && <FlashScreen />
+        }
+
+        <Header/>
+
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/sign_in' element={<SignIn />} />
+        </Routes>
+
+      </div>
+    </Router>
   );
 }
 
-export default App;
+export default App; 
